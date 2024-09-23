@@ -287,6 +287,6 @@ app.post('/upload-avatar', upload.single('avatar'), (req, res) => {
 });
 
 // Bắt đầu server
-app.listen(PORT, () => {
-    console.log(`Server đang chạy trên http://localhost:${PORT}`);
-});
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
