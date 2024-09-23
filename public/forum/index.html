@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RGAME.VN</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1a2236;
+            color: #ffffff;
+        }
+        .header {
+            background-color: #2b3248;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header img {
+            height: 50px;
+        }
+        .header nav {
+            display: flex;
+            align-items: center;
+        }
+        .header nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 16px;
+        }
+        .header nav a:hover {
+            text-decoration: underline;
+        }
+        .header .icons {
+            display: flex;
+            align-items: center;
+        }
+        .header .icons i {
+            margin-left: 15px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .container {
+            display: flex;
+            padding: 20px;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #1a2236;
+            padding: 20px;
+        }
+        .sidebar img {
+            width: 100%;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+        .section {
+            background-color: #2b3248;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .section-header {
+            background-color: #e74c3c;
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .section-content {
+            padding: 20px;
+        }
+        .section-content .item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #3a3f51;
+        }
+        .section-content .item:last-child {
+            border-bottom: none;
+        }
+        .section-content .item i {
+            margin-right: 10px;
+        }
+        .section-content .item .title {
+            display: flex;
+            align-items: center;
+        }
+        .section-content .item .status {
+            color: #999999;
+        }
+        .hidden {
+            display: none;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .user-info img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img alt="RGAME.VN Logo" height="50" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-LmQ09WWGIGwOeeA4ArnRw0x5/user-uJPET5fjNenSso8wCETWVNOp/img-LuYb3jTWqLCA21dRLopcZYr0.png" width="50"/>
+        <nav>
+            <a href="#">Diễn Đàn</a>
+            <a href="#">Các loại đơn</a>
+            <a href="#">Hỏi & đáp</a>
+        </nav>
+        <div class="icons">
+            <i class="fas fa-home" onclick="goToProfile()"></i>
+            <i class="fas fa-cog" onclick="goToAdmin()"></i>
+        </div>
+        <div class="user-info" id="user-info" class="hidden">
+            <img id="avatarDisplay" alt="Avatar">
+            <span id="usernameDisplay"></span>
+            <i class="fas fa-sign-out-alt" id="logoutButton" style="cursor:pointer;"></i>
+        </div>
+    </div>
+    <div class="container">
+        <div class="sidebar">
+            <img alt="Sidebar Image" height="250" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-LmQ09WWGIGwOeeA4ArnRw0x5/user-uJPET5fjNenSso8wCETWVNOp/img-MB6ZB2EE7gNqn3lwjH4Fom87.png" width="250"/>
+        </div>
+        <div class="content">
+            <div class="section">
+                <div class="section-header">Tin Tức</div>
+                <div class="section-content">
+                    <div class="item">
+                        <div class="title">
+                            <i class="fas fa-comments"></i>
+                            <span>Hướng dẫn toàn bộ chức năng tại RG</span>
+                        </div>
+                        <div class="status">Hướng dẫn (từ BQT)</div>
+                    </div>
+                    <div class="item">
+                        <div class="title">
+                            <i class="fas fa-newspaper"></i>
+                            <span>Tin tức mới</span>
+                        </div>
+                        <div class="status">Nơi đăng tin tức mới của nhà báo</div>
+                    </div>
+                    <div class="item">
+                        <div class="title">
+                            <i class="fas fa-gamepad"></i>
+                            <span>Về Game</span>
+                        </div>
+                        <div class="status">Chợ, Hình ảnh & video, Sự kiện</div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-header" style="background-color: #e74c3c;">Công Nghệ</div>
+                <div class="section-content">
+                    <div class="item">
+                        <div class="title">
+                            <i class="fas fa-comments"></i>
+                            <span>
+                                <a href="congnghe.html" style="color: inherit; text-decoration: none;">Tài Liệu</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-header" style="background-color: #e74c3c;">Trợ giúp</div>
+                <div class="section-content">
+                    <div class="item">
+                        <div class="title">
+                            <i class="fas fa-comments"></i>
+                            <span>Private</span>
+                        </div>
+                        <div class="status">Private</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goToProfile() {
+            const username = localStorage.getItem('username');
+            window.location.href = username ? '../user/profile.html' : '../login/login.html';
+        }
+
+        function goToAdmin() {
+            window.location.href = '../admin/index.html';
+        }
+
+        function updateUserInterface() {
+            const username = localStorage.getItem('username');
+            const avatar = localStorage.getItem('avatar');
+            const role = localStorage.getItem('role');
+
+            if (username) {
+                document.getElementById('usernameDisplay').textContent = username;
+                document.getElementById('user-info').style.display = 'flex';
+                if (avatar) {
+                    document.getElementById('avatarDisplay').style.backgroundImage = `url(${avatar})`;
+                    document.getElementById('avatarDisplay').style.display = 'block';
+                }
+            } else {
+                document.getElementById('user-info').style.display = 'none';
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('username');
+            localStorage.removeItem('avatar');
+            localStorage.removeItem('role');
+            alert('Bạn đã đăng xuất thành công.');
+            updateUserInterface();
+            window.location.href = './login/login.html'; // Chuyển hướng về trang đăng nhập
+        }
+
+        document.getElementById('logoutButton').onclick = handleLogout;
+
+        // Lưu trang trước khi chuyển đến trang đăng nhập
+        document.querySelector('.icons .fa-cog').onclick = function() {
+            localStorage.setItem('redirectTo', window.location.href);
+            window.location.href = '../login/login.html';
+        };
+        
+
+        // Cập nhật giao diện khi trang được tải
+        updateUserInterface();
+    </script>
+</body>
+</html>

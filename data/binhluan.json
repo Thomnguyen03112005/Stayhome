@@ -1,0 +1,16 @@
+{
+  "binhluan": [
+    {
+      "id": 1,
+      "username": "Người tạo 2",
+      "noidung": "Nội dung bài viết 2",
+      "postId": "1726988101016"
+    },
+    {
+      "id": 2,
+      "username": "Thowm2005",
+      "noidung": "dsa",
+      "postId": "4"
+    }
+  ]
+}

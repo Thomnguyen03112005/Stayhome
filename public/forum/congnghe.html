@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Các Bài Viết</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a2236;
+            color: #ffffff;
+        }
+        .header {
+            background-color: #2b3248;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .post {
+            background-color: #2b3248;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .post-title {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .post-author {
+            font-size: 16px;
+            color: #cccccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="./index.html">Quay lại Trang Chủ</a>
+    </div>
+
+    <div class="content">
+        <div id="posts"></div>
+    </div>
+
+    <script>
+        async function fetchPosts() {
+            try {
+                const response = await fetch('/api/posts');
+                const posts = await response.json();
+                const postsContainer = document.getElementById('posts');
+                postsContainer.innerHTML = '';
+
+                // Lọc và hiển thị chỉ bài viết có thể loại "công nghệ"
+                posts.Forum.forEach(post => {
+                    if (post.theloai === 'công nghệ') {
+                        const postDiv = document.createElement('div');
+                        postDiv.className = 'post';
+                        postDiv.innerHTML = `
+                            <div class="post-title" onclick="viewPost(${post.id})">${post.Title}</div>
+                            <div>Người tạo: ${post.username || 'Khách'}</div>
+                            <div>Thời gian: ${new Date(post.time).toLocaleString()}</div>
+                        `;
+                        postsContainer.appendChild(postDiv);
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching posts:', error);
+            }
+        }
+
+        // Hàm xem bài viết
+        function viewPost(postId) {
+            window.location.href = `./post.html?id=${postId}`; // Chuyển đến trang xem bài viết
+        }
+
+        // Gọi hàm lấy bài viết khi trang được tải
+        fetchPosts();
+    </script>
+</body>
+</html>

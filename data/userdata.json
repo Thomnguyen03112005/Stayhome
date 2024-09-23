@@ -1,0 +1,20 @@
+{
+  "datauser": [
+    {
+      "id": 1,
+      "name": "nguyentoan03112005@gmail.com",
+      "username": "Thowm2005",
+      "password": "$2b$10$ivFnXODA57hGRwdeYdClne20TUltoahx8f0KUUN2GxUDyLIXJ2lN.",
+      "rawPassword": "123",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "name": "leveling20051@gmail.com",
+      "username": "Thowm20055",
+      "password": "$2b$10$mxHbUlJvG.YwpsoMn7PqDeVdWWRzdybt2hWZoNlnF/1MexgHByFii",
+      "rawPassword": "123",
+      "role": "members"
+    }
+  ]
+}

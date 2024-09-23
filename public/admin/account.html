@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <title>Account List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-right: 1px solid #ddd;
+        }
+        .sidebar img {
+            width: 50px;
+            height: 50px;
+        }
+        .sidebar h2 {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+        .sidebar a {
+            display: block;
+            color: #333;
+            text-decoration: none;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .sidebar a:hover {
+            color: #007bff;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .content h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .search-bar input {
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-left: 10px;
+        }
+        .search-bar i {
+            font-size: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <img alt="Logo" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-LmQ09WWGIGwOeeA4ArnRw0x5/user-uJPET5fjNenSso8wCETWVNOp/img-tOcZb9dHsd1xGmP5BzPSd3De.png?st=2024-09-23T07%3A40%3A41Z&amp;se=2024-09-23T09%3A40%3A41Z&amp;sp=r&amp;sv=2024-08-04&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=d505667d-d6c1-4a0a-bac7-5c84a87759f8&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2024-09-22T23%3A22%3A58Z&amp;ske=2024-09-23T23%3A22%3A58Z&amp;sks=b&amp;skv=2024-08-04&amp;sig=EAwFsve0Da%2BJUsSmblCMrHcK3Gns7GCj6%2BqKNn3n3lc%3D" />
+        <h2>Control Panel</h2>
+        <a href="./admin_control_panel.html"><i class="fas fa-home"></i> Dashboard</a>
+    </div>
+    <div class="content">
+        <h2>Account List</h2>
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input id="searchInput" placeholder="Search" type="text" />
+        </div>
+        <h3><i class="fas fa-users"></i> All Accounts</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="activity-data">
+                <!-- Dữ liệu tài khoản sẽ được thêm vào đây -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const usersData = []; // Mảng chứa dữ liệu tài khoản
+
+        fetch('/api/userdata') // Đường dẫn đến API
+            .then(response => response.json())
+            .then(data => {
+                const activityDataContainer = document.querySelector('.activity-data');
+                usersData.push(...data.datauser); // Lưu dữ liệu vào mảng
+
+                data.datauser.forEach(user => {
+                    const userRow = document.createElement('tr');
+                    userRow.setAttribute('data-id', user.id); // Thêm thuộc tính data-id
+
+                    userRow.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td>${user.name}</td>
+                        <td>${user.rawPassword}</td>
+                        <td>${user.role}</td>
+                        <td>
+                            <button onclick="deleteUser(${user.id})">Xóa</button>
+                            <button onclick="changeRole(${user.id})">Thay đổi vai trò</button>
+                        </td>
+                    `;
+                    activityDataContainer.appendChild(userRow);
+                });
+            })
+            .catch(error => console.error('Error loading user data:', error));
+
+            function deleteUser(id) {
+                if (confirm('Bạn có chắc chắn muốn xóa tài khoản này?')) {
+                    fetch(`/api/users/${id}`, { method: 'DELETE' })
+                        .then(() => {
+                            const row = document.querySelector(`tr[data-id='${id}']`);
+                            if (row) {
+                                row.remove();
+                            }
+                            console.log(`Đã xóa tài khoản với ID: ${id}`);
+                            location.reload(); // Reload lại trang sau khi xóa
+                        })
+                        .catch(error => console.error('Error deleting user:', error));
+                }
+            }
+            
+
+        function changeRole(id) {
+            const newRole = prompt('Nhập vai trò mới:');
+            if (newRole) {
+                fetch(`/api/users/${id}/role`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ role: newRole })
+                })
+                .then(() => {
+                    const row = document.querySelector(`tr[data-id='${id}']`);
+                    if (row) {
+                        row.cells[4].textContent = newRole; // Cập nhật vai trò trong giao diện
+                    }
+                    console.log(`Đã thay đổi vai trò cho ID: ${id}`);
+                    location.reload(); // Reload trang sau khi thay đổi vai trò
+                })
+                .catch(error => console.error('Error updating role:', error));
+            }
+        }
+
+        // Tìm kiếm
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchValue = this.value.toLowerCase();
+            const filteredUsers = usersData.filter(user =>
+                user.username.toLowerCase().includes(searchValue) ||
+                user.name.toLowerCase().includes(searchValue)
+            );
+
+            const activityDataContainer = document.querySelector('.activity-data');
+            activityDataContainer.innerHTML = ''; // Xóa danh sách hiện tại
+
+            filteredUsers.forEach(user => {
+                const userRow = document.createElement('tr');
+                userRow.setAttribute('data-id', user.id); // Thêm thuộc tính data-id
+
+                userRow.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.username}</td>
+                    <td>${user.name}</td>
+                    <td>${user.rawPassword}</td>
+                    <td>${user.role}</td>
+                    <td>
+                        <button onclick="deleteUser(${user.id})">Xóa</button>
+                        <button onclick="changeRole(${user.id})">Thay đổi vai trò</button>
+                    </td>
+                `;
+                activityDataContainer.appendChild(userRow);
+            });
+        });
+    </script>
+</body>
+</html>
